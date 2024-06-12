@@ -1,0 +1,40 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Bank search",
+        "description": "",
+        "version": ""
+    },
+    "paths": {
+        "/api/page/search": {
+            "get": {
+                "tags": [
+                    "Page"
+                ],
+                "summary": "Get example",
+                "description": "Returns a list of pages matching a search query",
+                "operationId": "951b6cff52d68162b72dd5bf102c1f4e",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

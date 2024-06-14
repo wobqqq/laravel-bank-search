@@ -30,8 +30,6 @@ Minimum number of characters that page content can contain:
 PARSER_MIN_PAGE_CONTENT_SIZE=100
 ```
 
-The process is divided into two parts. First, web pages are scanned for each resource and data is recorded in the database. The next step is that the received data is sent to ChatGPT.
-
 ### Commands
 
 Start the resource parser:

@@ -14,8 +14,15 @@ return new class () extends Migration {
             $table->string('url', 2000);
             $table->boolean('is_active')->default(1)->index();
             $table->smallInteger('resource_id')->unsigned()->index();
-            $table->string('title', 500);
+            $table->string('external_id')->index();
+            $table->string('content_id')->unique();
+            $table->string('meta_title', 500)->nullable();
+            $table->text('meta_description')->nullable();
+            $table->string('title', 500)->nullable();
             $table->text('content');
+            $table->string('synonyms', 1000)->nullable();
+            $table->dateTime('parsed_at');
+            $table->dateTime('changed_at');
             $table->timestamps();
 
             $table->foreign('resource_id')

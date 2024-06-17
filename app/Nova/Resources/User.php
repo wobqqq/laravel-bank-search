@@ -13,9 +13,9 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 /**
- * @extends Resource<\App\Models\User>
+ * @extends BaseResource<\App\Models\User>
  */
-class User extends Resource
+class User extends BaseResource
 {
     /** @var class-string<\App\Models\User> */
     public static string $model = \App\Models\User::class;
@@ -37,19 +37,15 @@ class User extends Resource
     {
         return [
             ID::make()->sortable(),
-
             Gravatar::make()->maxWidth(50),
-
             Text::make('Name')
                 ->sortable()
                 ->rules('required', 'max:255'),
-
             Text::make('Email')
                 ->sortable()
                 ->rules('required', 'email', 'max:254')
                 ->creationRules('unique:users,email')
                 ->updateRules('unique:users,email,{{resourceId}}'),
-
             Password::make('Password')
                 ->onlyOnForms()
                 ->creationRules('required', Rules\Password::defaults())

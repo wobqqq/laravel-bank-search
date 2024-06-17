@@ -22,9 +22,9 @@ class SearchRequest extends FormRequest
 
     public function getData(): SearchData
     {
-        return SearchData::from(
-            trim($this->string('query')->value()),
-            trim($this->string('resource_name')->value()),
-        );
+        return SearchData::from([
+            'query' => trim($this->string('query')->value()),
+            'resource_name' => trim($this->string('resource_name')->value()),
+        ]);
     }
 }

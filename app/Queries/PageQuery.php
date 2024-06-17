@@ -66,6 +66,7 @@ final readonly class PageQuery
         $expression = "
             pages.url,
             pages.title,
+            pages.meta_title,
             pages.content,
             ($search_score) AS score
         ";

@@ -4,62 +4,72 @@ declare(strict_types=1);
 
 namespace App\Nova\Resources;
 
+use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\Field;
+use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Laravel\Nova\Resource as NovaResource;
 
 /**
- * @template TModel of \Illuminate\Database\Eloquent\Model
- * @extends NovaResource<TModel>
+ * @extends BaseResource<\App\Models\Resource>
  */
-abstract class Resource extends NovaResource
+class Resource extends BaseResource
 {
-    /**
-     * Build an "index" query for the given resource.
-     *
-     * @param  NovaRequest  $request
-     * @param  \Illuminate\Database\Eloquent\Builder<TModel>  $query
-     * @return \Illuminate\Database\Eloquent\Builder<TModel>
-     */
-    public static function indexQuery(NovaRequest $request, $query): \Illuminate\Database\Eloquent\Builder
-    {
-        return $query;
-    }
+    /** @var class-string<\App\Models\Resource> */
+    public static string $model = \App\Models\Resource::class;
+
+    /** @var string */
+    public static $title = 'name';
+
+    /** @var array<int, string> */
+    public static $search = [
+        'id',
+        'name',
+        'url',
+    ];
 
     /**
-     * Build a Scout search query for the given resource.
-     *
-     * @param  NovaRequest  $request
-     * @param  \Laravel\Scout\Builder  $query
-     * @return \Laravel\Scout\Builder
+     * @return array<int, Field>
      */
-    public static function scoutQuery(NovaRequest $request, $query): \Laravel\Scout\Builder
+    public function fields(NovaRequest $request): array
     {
-        return $query;
+        return [
+            ID::make()
+                ->sortable()
+                ->onlyOnForms()
+                ->readonly(),
+            Boolean::make('Is Active')
+                ->sortable(),
+            Text::make('Name')
+                ->sortable()
+                ->readonly(),
+            Text::make('URL')
+                ->sortable()
+                ->rules('required', 'max:255'),
+            Text::make('Sitemap URL')
+                ->sortable()
+                ->rules('nullable', 'max:255'),
+        ];
     }
 
-    /**
-     * Build a "detail" query for the given resource.
-     *
-     * @param  NovaRequest  $request
-     * @param  \Illuminate\Database\Eloquent\Builder<TModel>  $query
-     * @return \Illuminate\Database\Eloquent\Builder<TModel>
-     */
-    public static function detailQuery(NovaRequest $request, $query): \Illuminate\Database\Eloquent\Builder
+    public function authorizedToView(Request $request): bool
     {
-        return parent::detailQuery($request, $query);
+        return false;
     }
 
-    /**
-     * Build a "relatable" query for the given resource.
-     *
-     * This query determines which instances of the model may be attached to other resources.
-     *
-     * @param  NovaRequest  $request
-     * @param  \Illuminate\Database\Eloquent\Builder<TModel>  $query
-     * @return \Illuminate\Database\Eloquent\Builder<TModel>
-     */
-    public static function relatableQuery(NovaRequest $request, $query): \Illuminate\Database\Eloquent\Builder
+    public function authorizedToDelete(Request $request): bool
     {
-        return parent::relatableQuery($request, $query);
+        return false;
+    }
+
+    public function authorizedToReplicate(Request $request): bool
+    {
+        return false;
+    }
+
+    public static function authorizedToCreate(Request $request): bool
+    {
+        return false;
     }
 }

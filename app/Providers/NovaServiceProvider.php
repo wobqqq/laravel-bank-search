@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\Dashboard;
 use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
+use Laravel\Nova\Tool;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {
@@ -65,11 +66,13 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     /**
      * Get the tools that should be listed in the Nova sidebar.
      *
-     * @return array<int, mixed>
+     * @return array<int, Tool>
      */
     public function tools(): array
     {
-        return [];
+        return [
+            \Laravel\Nova\LogViewer\LogViewer::make(),
+        ];
     }
 
     /**

@@ -20,7 +20,7 @@ class SearchResource extends JsonResource
     {
         return [
             'url' => $this->resource->url,
-            'title' => $this->resource->title,
+            'title' => $this->resource->meta_title ?? $this->resource->title,
             'content' => $this->resource->content,
         ];
     }

@@ -6,29 +6,138 @@
         "version": ""
     },
     "paths": {
-        "/api/page/search": {
+        "/api/pages/search": {
             "get": {
                 "tags": [
                     "Page"
                 ],
-                "summary": "Get example",
+                "summary": "Page search",
                 "description": "Returns a list of pages matching a search query",
-                "operationId": "951b6cff52d68162b72dd5bf102c1f4e",
+                "operationId": "ce216a956128101df6ae94c63c596fd7",
                 "responses": {
                     "200": {
-                        "description": "Successful operation",
+                        "description": "Successful response",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "properties": {
-                                            "id": {
-                                                "type": "integer"
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "url": {
+                                                        "type": "string",
+                                                        "example": "https://btpensii.ro/bt-pensii/despre-noi/"
+                                                    },
+                                                    "title": {
+                                                        "type": "string",
+                                                        "example": "BT Pensii"
+                                                    },
+                                                    "content": {
+                                                        "type": "string",
+                                                        "example": "RAD Art Fair este unul dintre cele mai mari evenimente din zona de artă contemporană\n     *                      din România și este organizat de cele mai cunoscute galerii de renume de la noi din țară.În 2023 a avut loc prima ediție care a fost și un succes:\n     *                      peste 3000 de vizitatori, 20 de galerii participante, un parc de sculpturi de 5000 mp și 17 speakeri experți în piață.Pentru cea de-a doua ediție\n     *                      a târgului, ne bucurăm să facem parte din poveste ca presenting partner."
+                                                    }
+                                                },
+                                                "type": "object"
                                             }
                                         },
-                                        "type": "object"
-                                    }
+                                        "links": {
+                                            "properties": {
+                                                "first": {
+                                                    "type": "string",
+                                                    "example": "http://localhost/api/pages/search?page=1"
+                                                },
+                                                "last": {
+                                                    "type": "string",
+                                                    "example": "http://localhost/api/pages/search?page=6"
+                                                },
+                                                "prev": {
+                                                    "type": "string",
+                                                    "example": null,
+                                                    "nullable": true
+                                                },
+                                                "next": {
+                                                    "type": "string",
+                                                    "example": "http://localhost/api/pages/search?page=2",
+                                                    "nullable": true
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "meta": {
+                                            "properties": {
+                                                "current_page": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "from": {
+                                                    "type": "integer",
+                                                    "example": 1,
+                                                    "nullable": true
+                                                },
+                                                "last_page": {
+                                                    "type": "integer",
+                                                    "example": 6
+                                                },
+                                                "links": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "url": {
+                                                                "type": "string",
+                                                                "example": null,
+                                                                "nullable": true
+                                                            },
+                                                            "label": {
+                                                                "type": "string",
+                                                                "example": "&laquo; Previous"
+                                                            },
+                                                            "active": {
+                                                                "type": "boolean",
+                                                                "example": false
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "path": {
+                                                    "type": "string",
+                                                    "example": "http://localhost/api/pages/search"
+                                                },
+                                                "per_page": {
+                                                    "type": "integer",
+                                                    "example": 10
+                                                },
+                                                "to": {
+                                                    "type": "integer",
+                                                    "example": 10,
+                                                    "nullable": true
+                                                },
+                                                "total": {
+                                                    "type": "integer",
+                                                    "example": 58
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unexpected error"
+                                        }
+                                    },
+                                    "type": "object"
                                 }
                             }
                         }

@@ -7,6 +7,7 @@
 - Composer 2.7
 - MySQL 8.0
 - Laravel 11
+- Nova 4
 
 ## Usage
 
@@ -42,6 +43,12 @@ docker exec -t laravel-bank-search-php-fpm php artisan app:resource-parser
 
 [http://localhost/admin](http://localhost/admin)
 
+Default credentials:
+
+Email: ```admin@gmail.com```
+
+Password: ```admin```
+
 ### API documentation
 
 [http://localhost/api/documentation](http://localhost/api/documentation)
@@ -58,9 +65,15 @@ docker exec -t laravel-bank-search-php-fpm php artisan app:resource-parser
 cp .env.example .env
 ```
 
-**Step 4.** Set your **UID** and **GID** in the `.env` file (By default these values are set to **1000**).
+**Step 4.** Create a `auth.json` file based on `auth.example.json` and set your project credentials:
 
-**Step 5.** Run the containers:
+```bash
+cp auth.example.json auth.json
+```
+
+**Step 5.** Set your **UID** and **GID** in the `.env` file (By default these values are set to **1000**).
+
+**Step 6.** Run the containers:
 
 ```bash
 docker-compose up -d
@@ -68,7 +81,7 @@ docker-compose up -d
 
 This will run all the services described in `docker-compose.yml` in the background.
 
-**Step 6.** Run project installation:
+**Step 7.** Run project installation:
 
 ```bash
 docker exec -t laravel-bank-search-php-fpm composer project.install
@@ -76,7 +89,7 @@ docker exec -t laravel-bank-search-php-fpm composer project.install
 
 This will run composer install, DB migrations, IDE helper, etc.
 
-**Step 7.** Open the application in your browser:
+**Step 8.** Open the application in your browser:
 
 Application URL - [http://localhost](http://localhost)
 

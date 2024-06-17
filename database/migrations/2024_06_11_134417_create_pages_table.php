@@ -28,6 +28,13 @@ return new class () extends Migration {
             $table->foreign('resource_id')
                 ->references('id')
                 ->on('resources');
+
+            $table->fullText(['title', 'content', 'synonyms', 'meta_title', 'meta_description'], 'search_index');
+            $table->fullText('title');
+            $table->fullText('content');
+            $table->fullText('synonyms');
+            $table->fullText('meta_title');
+            $table->fullText('meta_description');
         });
     }
 

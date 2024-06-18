@@ -16,6 +16,7 @@ class SearchRequest extends FormRequest
     {
         return [
             'query' => 'required|string',
+            'page' => 'required|string',
         ];
     }
 
@@ -23,6 +24,7 @@ class SearchRequest extends FormRequest
     {
         return SearchData::from([
             'query' => trim($this->string('query')->value()),
+            'page' => $this->integer('page'),
         ]);
     }
 }

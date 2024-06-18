@@ -14,10 +14,10 @@ final readonly class PageQuery
 {
     /** @var array<string, float|int> */
     private const array SEARCH_SCORE = [
+        'title' => 1,
         'meta_title' => 1,
         'synonyms' => 1,
         'meta_description' => 0.8,
-        'title' => 0.6,
         'content' => 0.4,
     ];
 
@@ -55,7 +55,7 @@ final readonly class PageQuery
     /**
      * @return LengthAwarePaginator<Page>
      */
-    public function search(string $query, int $perPage): LengthAwarePaginator
+    public function search(string $query, int $perPage, int $page): LengthAwarePaginator
     {
         $search_score = Collection::make(self::SEARCH_SCORE);
         $search_score = $search_score->map(function (float|int $score, string $column) {
@@ -83,7 +83,7 @@ final readonly class PageQuery
             ->selectRaw($expression, [$query, $query, $query, $query, $query, $query, $query])
             ->whereRaw($sql, [$query])
             ->orderByDesc('score')
-            ->paginate($perPage);
+            ->paginate($perPage, [], 'page', $page);
 
         return $pages;
     }

@@ -24,6 +24,13 @@ class PageController extends Controller
      *        @OA\Schema(type="string"),
      *            description="Search query string"
      *     ),
+     *     @OA\Parameter(
+     *        name="page",
+     *        in="query",
+     *        required=true,
+     *        @OA\Schema(type="integer", default=1),
+     *            description="Number of page"
+     *     ),
      *     @OA\Response(
      *         response=200,
      *         description="Successful response",
@@ -83,7 +90,11 @@ class PageController extends Controller
     {
         $searchData = $request->getData();
 
-        $pages = $pageQuery->search($searchData->query, $searchData->perPage);
+        $pages = $pageQuery->search(
+            $searchData->query,
+            $searchData->perPage,
+            $searchData->page,
+        );
 
         return SearchResource::collection($pages);
     }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response as HttpStatus;
@@ -25,7 +26,7 @@ return Application::configure(basePath: dirname(__DIR__))
                 return null;
             }
 
-            if ($e instanceof ValidationException) {
+            if ($e instanceof ValidationException || $e instanceof ThrottleRequestsException) {
                 return response()->json(['message' => $e->getMessage()], HttpStatus::HTTP_UNPROCESSABLE_ENTITY);
             }
 

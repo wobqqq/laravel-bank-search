@@ -10,3 +10,7 @@ Route::get('/', function () {
 
     return Redirect::to($url);
 });
+
+Route::get('/search-example', function () {
+    return view('search-example');
+});

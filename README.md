@@ -53,6 +53,10 @@ Password: ```admin```
 
 [http://localhost/api/documentation](http://localhost/api/documentation)
 
+### Search Example
+
+[http://localhost/search-example](http://localhost/search-example)
+
 ## Quick Start Installation
 
 **Step 1.** Install [Docker, Docker Compose](https://www.docker.com/products/docker-desktop/).

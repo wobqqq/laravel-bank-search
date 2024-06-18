@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Exceptions\SearchException;
 use App\Http\Requests\SearchRequest;
 use App\Http\Resources\SearchResource;
-use App\Models\Resource;
 use App\Queries\PageQuery;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
@@ -19,6 +17,13 @@ class PageController extends Controller
      *     tags={"Page"},
      *     summary="Page search",
      *     description="Returns a list of pages matching a search query",
+     *     @OA\Parameter(
+     *        name="query",
+     *        in="query",
+     *        required=true,
+     *        @OA\Schema(type="string"),
+     *            description="Search query string"
+     *     ),
      *     @OA\Response(
      *         response=200,
      *         description="Successful response",
@@ -29,12 +34,9 @@ class PageController extends Controller
      *                 type="array",
      *                 @OA\Items(
      *                     type="object",
-     *                     @OA\Property(property="url", type="string", example="https://btpensii.ro/bt-pensii/despre-noi/"),
-     *                     @OA\Property(property="title", type="string", example="BT Pensii"),
-     *                     @OA\Property(property="content", type="string", example="RAD Art Fair este unul dintre cele mai mari evenimente din zona de artă contemporană
-     *                      din România și este organizat de cele mai cunoscute galerii de renume de la noi din țară.În 2023 a avut loc prima ediție care a fost și un succes:
-     *                      peste 3000 de vizitatori, 20 de galerii participante, un parc de sculpturi de 5000 mp și 17 speakeri experți în piață.Pentru cea de-a doua ediție
-     *                      a târgului, ne bucurăm să facem parte din poveste ca presenting partner.")
+     *                     @OA\Property(property="url", type="string", example="https://comunitate.bancatransilvania.ro/proiecte/educatie/clujul-are-suflet/"),
+     *                     @OA\Property(property="title", type="string", example="Clujul are Suflet"),
+     *                     @OA\Property(property="content", type="string", example="bună.Peste 1500 de adolescenț­i au beneficiat de asistență educativă prin sprijin oferit de către profesorii centrului,")
      *                 )
      *             ),
      *             @OA\Property(
@@ -76,25 +78,12 @@ class PageController extends Controller
      *         )
      *     )
      * )
-     * @throws SearchException
      */
     public function search(SearchRequest $request, PageQuery $pageQuery): AnonymousResourceCollection
     {
         $searchData = $request->getData();
 
-        $resourceId = null;
-
-        if (!empty($searchData->resourceName)) {
-            $resource = Resource::whereName($searchData->resourceName)->first();
-
-            if (empty($resource)) {
-                throw new SearchException('Resource not found');
-            }
-
-            $resourceId = $resource->id;
-        }
-
-        $pages = $pageQuery->search($searchData->query, $searchData->perPage, $resourceId);
+        $pages = $pageQuery->search($searchData->query, $searchData->perPage);
 
         return SearchResource::collection($pages);
     }

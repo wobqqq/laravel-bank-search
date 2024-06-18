@@ -7,6 +7,7 @@
         __DIR__ . '/database/',
         __DIR__ . '/config/',
         __DIR__ . '/routes/',
+        __DIR__ . '/bootstrap/',
     ]);
 
     return (new PhpCsFixer\Config())

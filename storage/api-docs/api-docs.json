@@ -14,6 +14,17 @@
                 "summary": "Page search",
                 "description": "Returns a list of pages matching a search query",
                 "operationId": "ce216a956128101df6ae94c63c596fd7",
+                "parameters": [
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "description": "Search query string",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Successful response",
@@ -27,15 +38,15 @@
                                                 "properties": {
                                                     "url": {
                                                         "type": "string",
-                                                        "example": "https://btpensii.ro/bt-pensii/despre-noi/"
+                                                        "example": "https://comunitate.bancatransilvania.ro/proiecte/educatie/clujul-are-suflet/"
                                                     },
                                                     "title": {
                                                         "type": "string",
-                                                        "example": "BT Pensii"
+                                                        "example": "Clujul are Suflet"
                                                     },
                                                     "content": {
                                                         "type": "string",
-                                                        "example": "RAD Art Fair este unul dintre cele mai mari evenimente din zona de artă contemporană\n     *                      din România și este organizat de cele mai cunoscute galerii de renume de la noi din țară.În 2023 a avut loc prima ediție care a fost și un succes:\n     *                      peste 3000 de vizitatori, 20 de galerii participante, un parc de sculpturi de 5000 mp și 17 speakeri experți în piață.Pentru cea de-a doua ediție\n     *                      a târgului, ne bucurăm să facem parte din poveste ca presenting partner."
+                                                        "example": "bună.Peste 1500 de adolescenț­i au beneficiat de asistență educativă prin sprijin oferit de către profesorii centrului,"
                                                     }
                                                 },
                                                 "type": "object"

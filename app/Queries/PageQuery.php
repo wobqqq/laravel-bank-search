@@ -17,8 +17,8 @@ final readonly class PageQuery
         'meta_title' => 1,
         'synonyms' => 1,
         'meta_description' => 0.8,
-        'title' => 0.7,
-        'content' => 0.6,
+        'title' => 0.6,
+        'content' => 0.4,
     ];
 
     /**
@@ -55,7 +55,7 @@ final readonly class PageQuery
     /**
      * @return LengthAwarePaginator<Page>
      */
-    public function search(string $query, int $perPage, int $resourceId = null): LengthAwarePaginator
+    public function search(string $query, int $perPage): LengthAwarePaginator
     {
         $search_score = Collection::make(self::SEARCH_SCORE);
         $search_score = $search_score->map(function (float|int $score, string $column) {
@@ -68,17 +68,19 @@ final readonly class PageQuery
             pages.title,
             pages.meta_title,
             pages.content,
-            ($search_score) AS score
+            ($search_score) AS score,
+            SUBSTRING(
+                pages.content,
+                GREATEST(1, LOCATE(?, pages.content) - 50),
+                LEAST(120, LENGTH(pages.content) - GREATEST(1, LOCATE(?, pages.content) - 50))
+            ) AS content
         ";
 
         $sql = 'MATCH(title, content, synonyms, meta_title, meta_description) AGAINST(? IN NATURAL LANGUAGE MODE)';
 
         $pages = Page::whereIsActive(true)
             ->whereHas('resource', fn (Builder|Resource $q) => $q->whereIsActive(true))
-            ->when($resourceId, function (Builder|Page $query, int $resourceId) {
-                return $query->where('resource_id', $resourceId);
-            })
-            ->selectRaw($expression, [$query, $query, $query, $query, $query])
+            ->selectRaw($expression, [$query, $query, $query, $query, $query, $query, $query])
             ->whereRaw($sql, [$query])
             ->orderByDesc('score')
             ->paginate($perPage);

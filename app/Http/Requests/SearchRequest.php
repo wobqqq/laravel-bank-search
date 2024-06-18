@@ -16,7 +16,6 @@ class SearchRequest extends FormRequest
     {
         return [
             'query' => 'required|string',
-            'resource_name' => 'nullable|string',
         ];
     }
 
@@ -24,7 +23,6 @@ class SearchRequest extends FormRequest
     {
         return SearchData::from([
             'query' => trim($this->string('query')->value()),
-            'resource_name' => trim($this->string('resource_name')->value()),
         ]);
     }
 }

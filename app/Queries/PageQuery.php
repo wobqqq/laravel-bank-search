@@ -14,11 +14,11 @@ final readonly class PageQuery
 {
     /** @var array<string, float|int> */
     private const array SEARCH_SCORE = [
-        'title' => 1,
+        'title' => 10,
+        'synonyms' => 10,
         'meta_title' => 1,
-        'synonyms' => 1,
-        'meta_description' => 0.8,
-        'content' => 0.4,
+        'meta_description' => 0.4,
+        'content' => 0.3,
     ];
 
     /**

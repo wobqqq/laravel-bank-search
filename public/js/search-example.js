@@ -73,15 +73,19 @@ const onError = (response) => {
     afterSendForm();
 };
 
-const onSuccess = (response) => {
+const onSuccess = (response, isPagination = true) => {
     const resultsWrapper = document.getElementById('searchResults');
 
     const searchResults = getSearchResults(response.data);
 
     if (searchResults && searchResults.length > 0) {
-        resultsWrapper.innerHTML += searchResults.join('');
+        if (isPagination) {
+            resultsWrapper.innerHTML += searchResults.join('');
+        } else {
+            resultsWrapper.innerHTML = searchResults.join('');
+        }
     } else {
-        resultsWrapper.innerHTML = '';
+        resultsWrapper.innerHTML = '<p>No results found.</p>';
     }
 };
 
@@ -107,7 +111,7 @@ const onShowAllResultsSuccess = (response) => {
 const onSearchQuerySetSuccess = (response) => {
     response.data = response.data.slice(0, 4);
 
-    onSuccess(response);
+    onSuccess(response, false);
     afterSendForm();
 }
 
